@@ -59,9 +59,9 @@ class ParentDataObject {
     protected array $complexCollection = [];
 }
 
-#[DecodeClass(DataObjectWithMethodCalls::class)]
-#[EncodeClass(DataObjectWithMethodCalls::class)]
-class DataObjectWithMethodCalls
+#[DecodeClass(DataObject::class)]
+#[EncodeClass(DataObject::class)]
+class DataObject
 {
     #[EncodeProperty('dataObjectValue')]
     #[DecodeToProperty('dataObjectValue')]
@@ -79,8 +79,8 @@ class DataObjectWithMethodCalls
 #[DecodeToParentProperty('parentProperties', 'someCounter')]
 #[EncodeFromParentHomomorphCollection('parentSimpleCollection', 'simpleCollection')]
 #[DecodeToParentHomomorphCollection('parentSimpleCollection', 'simpleCollection')]
-#[EncodeFromParentHomomorphCollection('parentComplexCollection', 'complexCollection', DataObjectWithMethodCalls::class)]
-#[DecodeToParentHomomorphCollection('parentComplexCollection', 'complexCollection', DataObjectWithMethodCalls::class)]
+#[EncodeFromParentHomomorphCollection('parentComplexCollection', 'complexCollection', DataObject::class)]
+#[DecodeToParentHomomorphCollection('parentComplexCollection', 'complexCollection', DataObject::class)]
 class DataObjectWithData extends ParentDataObject
 {
     #[EncodeProperty('stringValue')]
@@ -99,8 +99,8 @@ class DataObjectWithData extends ParentDataObject
     public array $nestedSimpleValues = [];
 
 
-    #[EncodeFromHomomorphCollection('Complex---Property', DataObjectWithMethodCalls::class)]
-    #[DecodeToHomomorphCollection('Complex---Property', DataObjectWithMethodCalls::class)]
+    #[EncodeFromHomomorphCollection('Complex---Property', DataObject::class)]
+    #[DecodeToHomomorphCollection('Complex---Property', DataObject::class)]
     public array $nestedComplexValues = [];
 
     public float $computedValue = 0;
@@ -125,15 +125,6 @@ class DataObjectWithData extends ParentDataObject
 
         return $this;
     }
-
-    #[DecodeToMethodCall('computedValue', [0.5])]
-    public function setComputedValueWithFactor(float $value, float $factor): self
-    {
-        $this->computedValue = $value * $factor;
-
-        return $this;
-    }
-
 }
 
 class EncoderDecoderTest extends TestCase
@@ -153,7 +144,6 @@ class EncoderDecoderTest extends TestCase
         );
     }
 
-
     public function testEncoding()
     {
         $source = new DataObjectWithData();
@@ -168,8 +158,8 @@ class EncoderDecoderTest extends TestCase
 
         $source->setSimpleCollection([1,2,3,4,55,66,77,88,99]);
 
-        $source->nestedComplexValues = [new DataObjectWithMethodCalls(33)];
-        $source->setComplexCollection([new DataObjectWithMethodCalls(99)]);
+        $source->nestedComplexValues = [new DataObject(33)];
+        $source->setComplexCollection([new DataObject(99)]);
         $serializedData = $this->encoderServiceUnderTest->encode($source);
 
         /** @var DataObjectWithData $sink */
