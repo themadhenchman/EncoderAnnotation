@@ -1,6 +1,5 @@
 <?php
 
-
 use EncoderAnnotation\Attributes\DecodeClass;
 use EncoderAnnotation\Attributes\DecodeToHomomorphCollection;
 use EncoderAnnotation\Attributes\DecodeToParentHomomorphCollection;
@@ -18,7 +17,6 @@ use EncoderAnnotation\Encoder;
 use EncoderAnnotation\EncoderService;
 use EncoderAnnotation\EncoderTransformer;
 use PHPUnit\Framework\TestCase;
-
 
 
 class ParentDataObject {
@@ -173,8 +171,6 @@ class EncoderDecoderTest extends TestCase
         $source->nestedComplexValues = [new DataObjectWithMethodCalls(33)];
         $source->setComplexCollection([new DataObjectWithMethodCalls(99)]);
         $serializedData = $this->encoderServiceUnderTest->encode($source);
-
-        var_dump($serializedData);
 
         /** @var DataObjectWithData $sink */
         $sink = $this->decoderServiceUnderTest->decode($serializedData, new DataObjectWithData(true));
