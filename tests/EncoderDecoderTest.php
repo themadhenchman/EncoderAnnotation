@@ -1,5 +1,7 @@
 <?php
 
+namespace EncoderAnnotation\Tests;
+
 use EncoderAnnotation\Attributes\DecodeClass;
 use EncoderAnnotation\Attributes\DecodeToHomomorphCollection;
 use EncoderAnnotation\Attributes\DecodeToParentHomomorphCollection;
@@ -18,8 +20,8 @@ use EncoderAnnotation\EncoderService;
 use EncoderAnnotation\EncoderTransformer;
 use PHPUnit\Framework\TestCase;
 
-
-class ParentDataObject {
+class ParentDataObject
+{
     public int $someCounter = 0;
 
     protected array $simpleCollection = [];
@@ -129,6 +131,7 @@ class DataObjectWithData extends ParentDataObject
 
 class EncoderDecoderTest extends TestCase
 {
+    /** @var DecoderService */
     private DecoderService $decoderServiceUnderTest;
     private EncoderService $encoderServiceUnderTest;
     protected function setUp(): void
@@ -164,8 +167,8 @@ class EncoderDecoderTest extends TestCase
 
         /** @var DataObjectWithData $sink */
         $sink = $this->decoderServiceUnderTest->decode($serializedData, new DataObjectWithData(true));
-        $this->assertEquals($source->foobar,$sink->foobar);
-        $this->assertEquals($expectedString,$sink->foobar);
+        $this->assertEquals($source->foobar, $sink->foobar);
+        $this->assertEquals($expectedString, $sink->foobar);
         $this->assertEquals($source->getFloat(), $sink->getFloat());
         $this->assertEquals($source->nested->foobar, $sink->nested->foobar);
         $this->assertEquals($source->nested->getFloat(), $sink->nested->getFloat());
