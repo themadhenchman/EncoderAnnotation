@@ -3,25 +3,26 @@
     "description": "Package that allows the transformation of data-objects into persistant formats based on annotation.",
     "type": "library",
     "keywords": [
-	"annotation",
-	"encoding",
-	"decoding",
-	"metaprogramming"
+      "annotation",
+      "encoding",
+      "decoding",
+      "metaprogramming"
     ],
+    "version": "1.0.0",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "EncoderAnnotation\\": "src/"
-        }
+      "psr-4": {
+        "EncoderAnnotation\\": "src/"
+      }
     },
     "authors": [
-        {
-            "name": "themadhenchman",
-            "email": "themadhenchman@posteo.nl"
-        }
+      {
+        "name": "themadhenchman",
+        "email": "themadhenchman@posteo.nl"
+      }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-	"php": "8.*" 
+      "phpunit/phpunit": "^9.5",
+      "php": "8.*" 
     }
 }
